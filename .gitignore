@@ -53,3 +53,9 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+#frama-c
+.frama-c
+
+#git
+.git

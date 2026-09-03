@@ -1,5 +1,5 @@
 # chachac 
-chachac chachac is an implementation of theChaCha20 encryption algorithm, formally verified using the <a href="https://datatracker.ietf.org/doc/html/rfc8439">RFC 8439</a> and <a href="https://www.frama-c.com/">ACSL/Frama-C</a>.
+chachac is an implementation of theChaCha20 encryption algorithm, formally verified using the <a href="https://datatracker.ietf.org/doc/html/rfc8439">RFC 8439</a> and <a href="https://www.frama-c.com/">ACSL/Frama-C</a>.
 
 # Introduction
 

@@ -1,9 +1,6 @@
 #include "chachac.h"
 #include <string.h>
 #include <stdio.h>
-#define STATESIZE 16
-#define ROUNDS 10
-
 
 static const uint32_t constants[4] = {
     0x61707865, 0x3320646e,
@@ -123,66 +120,59 @@ void inner_block(uint32_t state[]) {
     requires is_valid_range(nonce, 3);
     requires is_valid_range(key_stream, 16);
     requires is_valid_range(state, 16);
-
-    requires \separated(key+(0..7));
-    requires \separated(nonce+(0..2));
-    requires \separated(key_stream+(0..15));
-    requires \separated(state+(0..15));
-
-    assigns state[0..15];
-    assigns key_stream[0..15];
+    assigns state[0..15], key_stream[0..15];
 */
 void chacha20_block(uint32_t key[], uint32_t counter, uint32_t nonce[], uint32_t key_stream[],
         uint32_t state[]) {
-    //we first initialize the temporary state with constants
-    
-    /*@ loop assigns i;
-        loop assigns state[0..3];
+
+    /*@ loop invariant 0 <= i <= CONSTANTS;
+        loop assigns i, state[0..3];
+        loop variant CONSTANTS - i;
     */
-    for(size_t i=0; i<4; i++) 
+    for(size_t i=0; i<CONSTANTS; i++)
         state[i] = constants[i];
-    
-    /*@ loop assigns i;
-        loop assigns state[4..12];
+
+    /*@ loop invariant 0 <= i <= KEYLEN;
+        loop assigns i, state[4..12];
+        loop variant KEYLEN - i;
     */
-    for(size_t i=0; i<8; i++) 
+    for(size_t i=0; i<KEYLEN; i++)
         state[i+4] = key[i];
 
     state[12] = counter;
 
-    /*@ loop assigns i;
-        loop assigns state[13..15];
+    /*@ loop invariant 0 <= i <= NONCE;
+        loop assigns i, state[13..15];
+        loop variant NONCE - i;
     */
-    for(size_t i=0; i<3; i++) 
+    for(size_t i=0; i<NONCE; i++)
         state[i+13] = nonce[i];
 
     uint32_t init[STATESIZE];
-    /*@ loop assigns i;
-        loop assigns init[0..15];
+
+    /*@ loop invariant 0 <= i <= STATESIZE;
+        loop assigns i, init[0..15];
+        loop variant STATESIZE - i;
     */
-    for(size_t i=0; i<STATESIZE; i++) 
+    for(size_t i=0; i<STATESIZE; i++)
         init[i] = state[i];
 
-
-    //cha cha dance!!
-    /*@ loop assigns i;
-        loop assigns state[0..15];
+    //<><>><> cha cha dance <><><><>
+    
+    /*@ loop invariant 0 <= i <= ROUNDS;
+        loop assigns i, state[0..15];
+        loop variant ROUNDS - i;
     */
     for(size_t i=0; i<ROUNDS; i++)
         inner_block(state);
 
-    /*@ loop assigns i;
-        loop assigns state[0..15], key_stream[0..15];
+    /*@ loop invariant 0 <= i <= STATESIZE;
+        loop assigns i, state[0..15], key_stream[0..15];
+        loop variant STATESIZE - i;
     */
     for(size_t i=0; i<STATESIZE; i++) {
         state[i] += init[i];
         key_stream[i] = state[i];
     }
-}
-
-//@ assigns \nothing;
-int main() {
-
-    return 0;
 }
 

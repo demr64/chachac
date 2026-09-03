@@ -1,10 +1,16 @@
 FRAMAC=frama-c 
 SRC=src/chachac.c  
 
-pre:  
-	$(FRAMAC) -eva $(SRC) 
 check:  
 	$(FRAMAC) -wp $(SRC) 
-run:  
-	gcc -O2 -Wall -Wextra -o chachac.exe src/chachac.c  
-	./chachac.exe
+
+run: test/test.o src/chachac.o
+	gcc src/chachac.o test/test.o -o test.exe
+	./test.exe
+
+test.o:
+	gcc -o test/test.c
+
+chachac.o:
+	gcc -o src/chachac.c
+

@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 
-static const uint32_t constants[4] = {
+static const uint32_t constants[CONSTANTS] = {
     0x61707865, 0x3320646e,
     0x79622d32, 0x6b206574
 };
@@ -52,7 +52,6 @@ uint32_t rotl32(uint32_t x, unsigned int n) {
 
     logic uint32_t qr_c2(uint32_t a, uint32_t b, uint32_t c, uint32_t d) =
         sum(qr_c1(a, b, c, d), qr_d2(a, b, c, d));
-
 
     logic uint32_t qr_b2(uint32_t a, uint32_t b, uint32_t c, uint32_t d) =
         xor(qr_b1(a, b, c, d), qr_c2(a, b, c, d), 7);

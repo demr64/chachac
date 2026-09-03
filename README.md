@@ -7,7 +7,7 @@ chachac is an implementation of theChaCha20 encryption algorithm, formally verif
 ChaCha20 is a symmetric encryption algorithm, successor of Salsa20, this algorithm is a good alternative to the more famous AES since it uses much less advanced mathematics using an ARX design (add, rotate, xor).
 ChaCha20's internal state is based on a 4x4 array of 32-bits integers. The first four are constants, the next eight are a 256-bit key, then a 32-bit counter which increments in every operation, and a 96-bit nonce. This implementation for now focuses trying to prove mainly the internal block function.
 
-## Verification
+### Verification
 
 The current effort aims to show:
 - memory safety

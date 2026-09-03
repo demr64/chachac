@@ -1,7 +1,7 @@
 # chachac 
 chachac is an implementation of theChaCha20 encryption algorithm, formally verified using the <a href="https://datatracker.ietf.org/doc/html/rfc8439">RFC 8439</a> and <a href="https://www.frama-c.com/">ACSL/Frama-C</a>.
 
-# Introduction
+## Introduction
 
 ### ChaCha20?
 ChaCha20 is a symmetric encryption algorithm, successor of Salsa20, this algorithm is a good alternative to the more famous AES since it uses much less advanced mathematics using an ARX design (add, rotate, xor).
